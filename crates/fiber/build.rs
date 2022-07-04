@@ -10,8 +10,10 @@ fn main() {
     let family_file = format!("src/arch/{}.c", family);
     let arch_file = format!("src/arch/{}.S", arch);
     if fs::metadata(&family_file).is_ok() {
+        println!("cargo:rerun-if-changed={}", &family_file);
         build.file(&family_file);
     } else if fs::metadata(&arch_file).is_ok() {
+        println!("cargo:rerun-if-changed={}", &arch_file);
         build.file(&arch_file);
     } else {
         panic!(
